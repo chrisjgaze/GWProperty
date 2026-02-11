@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const MAX_MARKERS = 400;
-const DUBAI_BBOX = {
-  minLat: 24.7,
-  maxLat: 25.5,
-  minLng: 54.9,
-  maxLng: 55.8,
+const MIDDLE_EAST_BBOX = {
+  minLat: 12.0,
+  maxLat: 36.5,
+  minLng: 34.0,
+  maxLng: 64.0,
 };
 
 export default function MapView({ properties, selectedId, onSelect }) {
@@ -42,7 +42,13 @@ export default function MapView({ properties, selectedId, onSelect }) {
         }),
       };
 
-      mapRef.current = L.map(elRef.current, { zoomControl: true }).setView(
+      mapRef.current = L.map(elRef.current, {
+        zoomControl: true,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        touchZoom: false,
+        boxZoom: false,
+      }).setView(
         [25.2048, 55.2708],
         11
       );
@@ -76,7 +82,7 @@ export default function MapView({ properties, selectedId, onSelect }) {
 
       const pins = (properties || [])
         .filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lng))
-        .filter((p) => isInDubaiBBox(p.lat, p.lng))
+        .filter((p) => isInMiddleEastBBox(p.lat, p.lng))
         .slice(0, MAX_MARKERS);
 
       const bounds = [];
@@ -119,10 +125,11 @@ export default function MapView({ properties, selectedId, onSelect }) {
         }
       }
 
+      mapRef.current.invalidateSize();
       if (selectedLatLng) {
         mapRef.current.setView(selectedLatLng, Math.max(mapRef.current.getZoom(), 13));
       } else if (bounds.length) {
-        mapRef.current.fitBounds(bounds, { padding: [30, 30] });
+        mapRef.current.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
       }
     })();
   }, [ready, properties, selectedIdStr, onSelect]);
@@ -149,11 +156,11 @@ function formatAED(n) {
   return new Intl.NumberFormat("en-AE").format(n);
 }
 
-function isInDubaiBBox(lat, lng) {
+function isInMiddleEastBBox(lat, lng) {
   return (
-    lat >= DUBAI_BBOX.minLat &&
-    lat <= DUBAI_BBOX.maxLat &&
-    lng >= DUBAI_BBOX.minLng &&
-    lng <= DUBAI_BBOX.maxLng
+    lat >= MIDDLE_EAST_BBOX.minLat &&
+    lat <= MIDDLE_EAST_BBOX.maxLat &&
+    lng >= MIDDLE_EAST_BBOX.minLng &&
+    lng <= MIDDLE_EAST_BBOX.maxLng
   );
 }

@@ -3,13 +3,227 @@ import "../styles/app.css";
 import ListingsApp from "../components/ListingsApp.jsx";
 ---
 
-<html>
+<html lang="en">
   <head>
-    <title>Find a Home</title>
+    <title>Dubai Dream Off-Plan | ddubaidreamoffplan.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Browse Dubai off-plan projects, compare communities, and filter by developer, status, and price on Dubai Dream Off-Plan."
+    />
   </head>
 
-  <body>
-    <ListingsApp client:load />
+  <body class="site">
+    <header class="site-header">
+      <div class="nav-shell">
+        <div class="brand">
+          <div class="brand-mark">DD</div>
+          <div>
+            <div class="brand-name">Dubai Dream Off-Plan</div>
+            <div class="brand-sub">ddubaidreamoffplan.com</div>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="#projects">Projects</a>
+          <a href="#developers">Developers</a>
+          <a href="#communities">Communities</a>
+          <a href="#guides">Guides</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="nav-cta">
+          <button class="btn btn-dark">Get Insider Access</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <div class="eyebrow">Dubai's curated off-plan marketplace</div>
+            <h1>Find the next landmark address before the public launch.</h1>
+            <p>
+              Explore Dubai's newest off-plan releases in one place. Filter by community,
+              developer, and status to shortlist the right investment in minutes.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-green" href="#projects">Browse New Projects</a>
+              <a class="btn btn-outline" href="#guides">Get the Buyer Guide</a>
+            </div>
+            <div class="hero-stats">
+              <div>
+                <div class="stat-value">350+</div>
+                <div class="stat-label">Live projects</div>
+              </div>
+              <div>
+                <div class="stat-value">42</div>
+                <div class="stat-label">Top developers</div>
+              </div>
+              <div>
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Market tracking</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="card-eyebrow">This week's highlight</div>
+            <div class="card-title">Waterfront launches with flexible 10% down</div>
+            <div class="card-list">
+              <div>• Priority access to pre-launch prices</div>
+              <div>• Compare payment plans side by side</div>
+              <div>• Local expert review in 24 hours</div>
+            </div>
+            <button class="btn btn-dark">Request Project Brochure</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust">
+        <div class="trust-inner">
+          <div class="trust-item">
+            <div class="trust-title">Verified inventory</div>
+            <div class="trust-sub">Direct access to official developer stock.</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-title">Special launch terms</div>
+            <div class="trust-sub">Receive the most competitive payment plans.</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-title">Local specialists</div>
+            <div class="trust-sub">Guidance from Dubai-based consultants.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="search-section" id="projects">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">Search projects</div>
+            <h2>Dubai's latest off-plan launches in one place</h2>
+          </div>
+          <p>
+            Use the filters to shortlist by community, developer, and completion date.
+            Tap a listing to highlight it on the map.
+          </p>
+        </div>
+        <ListingsApp client:load />
+      </section>
+
+      <section class="developers" id="developers">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">Search by developer</div>
+            <h2>Explore every major Dubai developer</h2>
+          </div>
+          <p>Compare launches from the city's most trusted names.</p>
+        </div>
+        <div class="logo-grid">
+          <div class="logo-tile">EMAAR</div>
+          <div class="logo-tile">NAKHEEL</div>
+          <div class="logo-tile">DAMAC</div>
+          <div class="logo-tile">SOBHA</div>
+          <div class="logo-tile">MERAAS</div>
+          <div class="logo-tile">ELLINGTON</div>
+          <div class="logo-tile">BINGHATTI</div>
+          <div class="logo-tile">ALDAR</div>
+        </div>
+      </section>
+
+      <section class="communities" id="communities">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">Popular communities</div>
+            <h2>Shortlist by the neighborhoods investors love</h2>
+          </div>
+          <p>Hand-picked communities with the strongest off-plan pipeline.</p>
+        </div>
+        <div class="pill-grid">
+          <span class="pill-tag">Dubai Hills Estate</span>
+          <span class="pill-tag">Downtown Dubai</span>
+          <span class="pill-tag">Dubai Creek Harbour</span>
+          <span class="pill-tag">Palm Jumeirah</span>
+          <span class="pill-tag">Business Bay</span>
+          <span class="pill-tag">Jumeirah Village Circle</span>
+          <span class="pill-tag">Dubai Marina</span>
+          <span class="pill-tag">The Valley</span>
+          <span class="pill-tag">Emaar Beachfront</span>
+          <span class="pill-tag">Dubai Islands</span>
+        </div>
+      </section>
+
+      <section class="guides" id="guides">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">Market guides</div>
+            <h2>Insights to help you buy smarter</h2>
+          </div>
+          <p>Download expert guides and get the latest market briefings.</p>
+        </div>
+        <div class="guide-grid">
+          <article class="guide-card">
+            <div class="guide-title">Off-plan buying checklist</div>
+            <div class="guide-text">
+              Everything to verify before reserving a unit, from escrow to handover dates.
+            </div>
+            <button class="btn btn-outline">Download PDF</button>
+          </article>
+          <article class="guide-card">
+            <div class="guide-title">2026 payment plan tracker</div>
+            <div class="guide-text">
+              Compare developer payment milestones and identify high-ROI launches.
+            </div>
+            <button class="btn btn-outline">Request Report</button>
+          </article>
+          <article class="guide-card">
+            <div class="guide-title">Investor strategy session</div>
+            <div class="guide-text">
+              A 30-minute call to align on budget, yields, and exit strategy.
+            </div>
+            <button class="btn btn-dark">Book a Call</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="cta-inner">
+          <div>
+            <div class="cta-title">Ready for your private preview?</div>
+            <p>
+              Speak with a Dubai specialist and get priority allocation before public launches.
+            </p>
+          </div>
+          <div class="cta-actions">
+            <button class="btn btn-dark">Book a Strategy Call</button>
+            <button class="btn btn-outline">WhatsApp Us</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-title">Dubai Dream Off-Plan</div>
+          <div class="footer-sub">Floor 29, Marina Plaza, Dubai Marina, UAE</div>
+          <div class="footer-sub">+971 50 000 0000</div>
+          <div class="footer-sub">hello@ddubaidreamoffplan.com</div>
+        </div>
+        <div>
+          <div class="footer-title">Popular Communities</div>
+          <div class="footer-link">Dubai Hills Estate</div>
+          <div class="footer-link">Downtown Dubai</div>
+          <div class="footer-link">Emaar Beachfront</div>
+          <div class="footer-link">Dubai Creek Harbour</div>
+        </div>
+        <div>
+          <div class="footer-title">Useful Links</div>
+          <div class="footer-link">Off-plan finance</div>
+          <div class="footer-link">Buying guide</div>
+          <div class="footer-link">Investor FAQ</div>
+          <div class="footer-link">Privacy policy</div>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Dubai Dream Off-Plan. All rights reserved.</div>
+    </footer>
   </body>
 </html>
