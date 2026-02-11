@@ -1,47 +1,159 @@
-import React, { useEffect, useRef } from "react";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import React, { useEffect, useRef, useState } from "react";
 
-export default function MapView({ properties }) {
+const MAX_MARKERS = 400;
+const DUBAI_BBOX = {
+  minLat: 24.7,
+  maxLat: 25.5,
+  minLng: 54.9,
+  maxLng: 55.8,
+};
+
+export default function MapView({ properties, selectedId, onSelect }) {
   const elRef = useRef(null);
   const mapRef = useRef(null);
   const layerRef = useRef(null);
+  const iconRef = useRef(null);
+  const [ready, setReady] = useState(false);
+  const selectedIdStr = selectedId ? String(selectedId) : "";
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     if (!elRef.current || mapRef.current) return;
 
-    mapRef.current = L.map(elRef.current, { zoomControl: true }).setView([25.2048, 55.2708], 11);
+    (async () => {
+      const leaflet = await import("leaflet");
+      const L = leaflet.default ?? leaflet;
 
-    // NOTE: Replace this tiles URL with a proper tiles provider for production.
-    // For quick dev/testing, this often works:
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap contributors",
-    }).addTo(mapRef.current);
+      // Bright pin for dark basemap
+      iconRef.current = {
+        default: L.divIcon({
+          className: "map-pin",
+          html: '<span class="map-pin-dot"></span>',
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
+          popupAnchor: [0, -12],
+        }),
+        selected: L.divIcon({
+          className: "map-pin",
+          html: '<span class="map-pin-dot is-selected"></span>',
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
+          popupAnchor: [0, -12],
+        }),
+      };
 
-    layerRef.current = L.layerGroup().addTo(mapRef.current);
+      mapRef.current = L.map(elRef.current, { zoomControl: true }).setView(
+        [25.2048, 55.2708],
+        11
+      );
+
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+      }).addTo(mapRef.current);
+
+      layerRef.current = L.layerGroup().addTo(mapRef.current);
+      setReady(true);
+    })();
+
+    return () => {
+      try {
+        mapRef.current?.remove();
+        mapRef.current = null;
+        layerRef.current = null;
+      } catch {}
+    };
   }, []);
 
   useEffect(() => {
-    if (!mapRef.current || !layerRef.current) return;
+    if (!ready || !layerRef.current || !iconRef.current) return;
 
-    layerRef.current.clearLayers();
+    (async () => {
+      const leaflet = await import("leaflet");
+      const L = leaflet.default ?? leaflet;
 
-    const pts = properties
-      .filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lng))
-      .map((p) => {
-        const m = L.marker([p.lat, p.lng]).bindPopup(
-          `<strong>${p.title ?? ""}</strong><br/>${p.community ?? ""}<br/>${p.status ?? ""}`
-        );
-        m.addTo(layerRef.current);
-        return [p.lat, p.lng];
-      });
+      layerRef.current.clearLayers();
 
-    if (pts.length) {
-      const bounds = L.latLngBounds(pts);
-      mapRef.current.fitBounds(bounds, { padding: [30, 30] });
-    }
-  }, [properties]);
+      const pins = (properties || [])
+        .filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lng))
+        .filter((p) => isInDubaiBBox(p.lat, p.lng))
+        .slice(0, MAX_MARKERS);
 
-  return <div ref={elRef} style={{ height: "100%", width: "100%" }} />;
+      const bounds = [];
+      let selectedLatLng = null;
+
+      for (const p of pins) {
+        bounds.push([p.lat, p.lng]);
+
+        // 🔴 Use explicit icon here
+        const isSelected = selectedIdStr && String(p.id) === selectedIdStr;
+        const priceLabel = p.minPrice != null ? `AED ${formatAED(p.minPrice)}` : "Price N/A";
+        const statusLabel = p.statusLabel || "Status";
+        const marker = L.marker([p.lat, p.lng], {
+          icon: isSelected ? iconRef.current.selected : iconRef.current.default,
+        })
+          .bindPopup(
+            `<div class="map-popup">
+              <div class="map-popup-title">${escapeHtml(p.title)}</div>
+              <div class="map-popup-sub">${escapeHtml(p.community)} • ${escapeHtml(p.developer)}</div>
+              <div class="map-popup-row">
+                <span class="map-popup-price">${escapeHtml(priceLabel)}</span>
+                <span class="map-popup-pill">${escapeHtml(statusLabel)}</span>
+              </div>
+            </div>`
+          )
+          .addTo(layerRef.current);
+
+        if (typeof onSelect === "function") {
+          marker.on("click", () => onSelect(p));
+        }
+
+        marker.on("mouseover", () => marker.openPopup());
+        marker.on("mouseout", () => {
+          if (!isSelected) marker.closePopup();
+        });
+
+        if (isSelected) {
+          selectedLatLng = [p.lat, p.lng];
+          marker.openPopup();
+        }
+      }
+
+      if (selectedLatLng) {
+        mapRef.current.setView(selectedLatLng, Math.max(mapRef.current.getZoom(), 13));
+      } else if (bounds.length) {
+        mapRef.current.fitBounds(bounds, { padding: [30, 30] });
+      }
+    })();
+  }, [ready, properties, selectedIdStr, onSelect]);
+
+  return (
+    <>
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      />
+      <div ref={elRef} style={{ height: "100%", width: "100%" }} />
+    </>
+  );
+}
+
+function escapeHtml(s = "") {
+  return s
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function formatAED(n) {
+  return new Intl.NumberFormat("en-AE").format(n);
+}
+
+function isInDubaiBBox(lat, lng) {
+  return (
+    lat >= DUBAI_BBOX.minLat &&
+    lat <= DUBAI_BBOX.maxLat &&
+    lng >= DUBAI_BBOX.minLng &&
+    lng <= DUBAI_BBOX.maxLng
+  );
 }
