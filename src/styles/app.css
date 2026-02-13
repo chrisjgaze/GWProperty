@@ -376,7 +376,11 @@ main{
 }
 
 .hero{
-  padding:70px 6vw 20px;
+  padding:70px 6vw 60px;
+  background:
+    linear-gradient(120deg, rgba(13,19,33,.7), rgba(13,19,33,.15)),
+    url("/images/hero.jpg") center/cover no-repeat;
+  border-bottom:1px solid rgba(15,23,42,.08);
 }
 .hero-inner{
   display:grid;
@@ -392,7 +396,7 @@ main{
 }
 .hero-copy p{
   font-size:18px;
-  color:var(--muted);
+  color:rgba(255,255,255,.88);
   max-width:520px;
 }
 .eyebrow{
@@ -400,7 +404,10 @@ main{
   text-transform:uppercase;
   letter-spacing:2px;
   font-size:12px;
-  color:var(--accent);
+  color:rgba(255,255,255,.8);
+}
+.hero-copy{
+  color:#fff;
 }
 .hero-actions{
   margin-top:24px;
@@ -425,7 +432,7 @@ main{
 }
 .stat-label{
   font-size:12px;
-  color:var(--muted);
+  color:rgba(255,255,255,.7);
   text-transform:uppercase;
   letter-spacing:1px;
 }
@@ -435,6 +442,9 @@ main{
   padding:28px;
   box-shadow:var(--shadow-soft);
   border:1px solid rgba(15,23,42,.08);
+}
+.hero-form{
+  background:#f0ece6;
 }
 .card-eyebrow{
   color:var(--muted);
@@ -454,6 +464,39 @@ main{
   font-size:14px;
   color:var(--muted);
   margin-bottom:20px;
+}
+.contact-form{
+  display:grid;
+  gap:14px;
+  margin-top:10px;
+}
+.form-field{
+  display:grid;
+  gap:6px;
+  font-size:13px;
+  color:var(--ink);
+  font-weight:600;
+}
+.form-field span{
+  color:var(--muted);
+  font-weight:600;
+  letter-spacing:.2px;
+}
+.form-checkbox{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:12px;
+  color:var(--muted);
+}
+.form-checkbox input{
+  margin-top:2px;
+}
+.form-note{
+  margin-top:14px;
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.5;
 }
 
 .trust{
@@ -594,6 +637,15 @@ main{
 .cta .btn-outline{
   border-color:rgba(255,255,255,.6);
   color:#fff;
+}
+
+.hero-secondary{
+  background:rgba(255,255,255,.9);
+  border-color:transparent;
+  color:#0b0d11;
+}
+.hero-secondary:hover{
+  background:#fff;
 }
 
 .site-footer{
