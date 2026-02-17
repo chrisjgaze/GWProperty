@@ -1,0 +1,75 @@
+---
+import "../styles/app.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Browse Dubai off-plan projects, communities, and developer insights.",
+} = Astro.props as Props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+  </head>
+
+  <body class="site">
+    <header class="site-header">
+      <div class="nav-shell">
+        <a class="brand brand-link" href="/">
+          <div class="brand-mark">DD</div>
+          <div>
+            <div class="brand-name">Dubai Dream Off-Plan</div>
+            <div class="brand-sub">dubaidreamoffplan.com</div>
+          </div>
+        </a>
+
+        <nav class="nav-links">
+          <a href="/">Projects</a>
+          <a href="/developers">Developers</a>
+          <a href="/communities">Communities</a>
+          <a href="/guides">Guides</a>
+          <a href="/contact">Contact Us</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a class="btn btn-dark" href="/contact">Get Insider Access</a>
+        </div>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-title">Dubai Dream Off-Plan</div>
+          <div class="footer-sub">+971 56 244 5357</div>
+          <div class="footer-sub">sales@dubaidreamoffplan.com</div>
+        </div>
+        <div>
+          <div class="footer-title">Popular Communities</div>
+          <div class="footer-link">Dubai Hills Estate</div>
+          <div class="footer-link">Downtown Dubai</div>
+          <div class="footer-link">Emaar Beachfront</div>
+          <div class="footer-link">Dubai Creek Harbour</div>
+        </div>
+        <div>
+          <div class="footer-title">Useful Links</div>
+          <a class="footer-link" href="/guides">Buying guide</a>
+          <a class="footer-link" href="/guides">Investor FAQ</a>
+          <a class="footer-link" href="/contact">Contact us</a>
+          <div class="footer-link">Privacy policy</div>
+        </div>
+      </div>
+      <div class="footer-bottom">&copy; 2026 Dubai Dream Off-Plan. All rights reserved.</div>
+    </footer>
+  </body>
+</html>

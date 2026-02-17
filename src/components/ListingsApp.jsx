@@ -27,6 +27,7 @@ export default function ListingsApp() {
   const [showMap, setShowMap] = useState(true);
   const [selectedId, setSelectedId] = useState("");
   const mapWrapRef = React.useRef(null);
+  const cardsRef = React.useRef(null);
 
   // Filters
   const [community, setCommunity] = useState("");
@@ -34,6 +35,10 @@ export default function ListingsApp() {
   const [status, setStatus] = useState("");
   const [q, setQ] = useState("");
   const [sortBy, setSortBy] = useState("featured_then_name");
+  const [page, setPage] = useState(1);
+  const [columns, setColumns] = useState(3);
+
+  const ROWS_PER_PAGE = 3;
 
   useEffect(() => {
     let cancelled = false;
@@ -94,6 +99,41 @@ export default function ListingsApp() {
     return res;
   }, [all, community, developer, status, q, sortBy]);
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !cardsRef.current) return;
+    const el = cardsRef.current;
+
+    const updateColumns = () => {
+      const styles = window.getComputedStyle(el);
+      const minWidth = parseFloat(styles.getPropertyValue("--card-min")) || 320;
+      const gap = parseFloat(styles.getPropertyValue("--card-gap")) || 14;
+      const width = el.clientWidth || 0;
+      const cols = Math.max(1, Math.floor((width + gap) / (minWidth + gap)));
+      setColumns(cols);
+    };
+
+    updateColumns();
+    const ro = new ResizeObserver(updateColumns);
+    ro.observe(el);
+    window.addEventListener("resize", updateColumns);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", updateColumns);
+    };
+  }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [community, developer, status, q, sortBy]);
+
+  const pageSize = Math.max(1, columns * ROWS_PER_PAGE);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const safePage = Math.min(page, totalPages);
+  const startIndex = (safePage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const pageItems = filtered.slice(startIndex, endIndex);
+
   const searchingLabel =
     community || developer || status || q ? "Filtered listings" : "All listings";
 
@@ -125,6 +165,7 @@ export default function ListingsApp() {
     setQ("");
     setSortBy("featured_then_name");
     setShowMap(true);
+    setPage(1);
   };
 
   return (
@@ -257,12 +298,12 @@ export default function ListingsApp() {
         </div>
 
         {/* Cards */}
-        <div className="cards">
-          {filtered.map((p, idx) => (
+        <div className="cards" ref={cardsRef}>
+          {pageItems.map((p, idx) => (
             <div key={p.id} className="card">
               <div className="cardMedia">
                 <img
-                  src={p.coverImage || getFallbackByIndex(idx)}
+                  src={p.coverImage || getFallbackByIndex(startIndex + idx)}
                   alt={p.title}
                   loading="lazy"
                   referrerPolicy="no-referrer"
@@ -278,7 +319,7 @@ export default function ListingsApp() {
                     // Only fallback once
                     if (!e.currentTarget.dataset.fallbackApplied) {
                       e.currentTarget.dataset.fallbackApplied = "1";
-                      e.currentTarget.src = getFallbackByIndex(idx, 1);
+                      e.currentTarget.src = getFallbackByIndex(startIndex + idx, 1);
                     }
                   }}
                 />
@@ -318,6 +359,32 @@ export default function ListingsApp() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="pagination">
+          <div className="pagination-meta">
+            Showing {Math.min(endIndex, filtered.length).toLocaleString()} of{" "}
+            {filtered.length.toLocaleString()} listings
+          </div>
+          <div className="pagination-controls">
+            <button
+              className="btn btn-outline"
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={safePage <= 1}
+            >
+              Prev
+            </button>
+            <div className="page-indicator">
+              Page {safePage} of {totalPages}
+            </div>
+            <button
+              className="btn btn-outline"
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={safePage >= totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
