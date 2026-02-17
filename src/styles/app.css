@@ -692,11 +692,36 @@ main{
   grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
   gap:16px;
 }
+.contact-layout{
+  display:grid;
+  grid-template-columns:minmax(0, 1.2fr) minmax(0, .8fr);
+  gap:16px;
+  align-items:start;
+}
 .contact-card{
   background:var(--panel);
   border:1px solid rgba(15,23,42,.08);
   border-radius:16px;
   padding:20px;
+}
+.contact-form-card h2{
+  margin-bottom:8px;
+}
+.contact-intro{
+  margin:0 0 14px;
+  color:var(--muted);
+  font-size:14px;
+}
+.contact-form{
+  display:grid;
+  gap:12px;
+}
+.input-textarea{
+  resize:vertical;
+  min-height:120px;
+}
+.honeypot{
+  display:none;
 }
 .contact-card h2{
   margin:0 0 10px;
@@ -935,6 +960,7 @@ a.footer-link:hover{
   .hero-inner{grid-template-columns:1fr;}
   .section-head{grid-template-columns:1fr;}
   .hero-stats{flex-wrap:wrap;}
+  .contact-layout{grid-template-columns:1fr;}
   .page-hero p{font-size:16px;}
   .why-shell > p{font-size:16px;}
   .why-grid{margin-top:30px;}
