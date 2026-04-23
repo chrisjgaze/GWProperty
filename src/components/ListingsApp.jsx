@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import MapView from "./MapView.jsx";
+import {
+  extractProjects,
+  formatAED,
+  isFiniteNum,
+  normalizeProject,
+  sortProjects,
+} from "../lib/normalize.js";
 
 /**
  * Expects: /public/properties.json
@@ -44,16 +51,23 @@ export default function ListingsApp() {
     let cancelled = false;
 
     fetch("/properties.json", { cache: "no-store" })
-      .then((r) => {
+      .then(async (r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
+        const text = await r.text();
+        if (!text.trim()) throw new Error("properties.json is empty");
+
+        try {
+          return JSON.parse(text);
+        } catch (error) {
+          throw new Error(`properties.json is not valid JSON: ${error.message}`);
+        }
       })
       .then((payload) => {
         if (cancelled) return;
 
-        const projects = payload?.data?.projects;
+        const projects = extractProjects(payload);
         if (!Array.isArray(projects)) {
-          throw new Error("Invalid JSON: data.projects is missing or not an array");
+          throw new Error("Invalid JSON: expected an array of projects");
         }
 
         const normalized = projects.map(normalizeProject);
@@ -393,44 +407,6 @@ export default function ListingsApp() {
 
 /* ---------------- Helpers ---------------- */
 
-function normalizeProject(p) {
-  const lat = toFloat(p.latitude);
-  const lng = toFloat(p.longitude);
-
-  const minPrice = computeMinPriceFromUnitVariations(p.unit_variations);
-
-  const featured = !!p.featured || isLikelyFeatured(p);
-  const unitTypesLabel = summarizeUnitTypes(p.unit_variations);
-
-  return {
-    id: String(p.id ?? ""),
-    title: p.name ?? "Untitled",
-    community: p.community ?? "",
-    developer: p.developer ?? "",
-    coverImage: cleanUrl(p.image ?? ""),
-    lat,
-    lng,
-    hasPin: isFiniteNum(lat) && isFiniteNum(lng),
-    completionDate: p.completion_date ?? "",
-    salesStatusCode: p.sales_status,
-    statusLabel: salesStatusLabel(p.sales_status),
-    minPrice,
-    featured,
-    unitTypesLabel,
-    raw: p,
-  };
-}
-
-function cleanUrl(u) {
-  if (!u) return "";
-  try {
-    const url = new URL(String(u).trim());
-    return url.toString();
-  } catch {
-    return String(u).trim().replaceAll(" ", "%20");
-  }
-}
-
 function uniq(arr) {
   return Array.from(new Set(arr)).filter(Boolean).sort((a, b) => a.localeCompare(b));
 }
@@ -439,124 +415,4 @@ function getFallbackByIndex(index, offset = 0) {
   const safeIndex = Number.isFinite(index) ? index : 0;
   const i = (safeIndex + offset) % FALLBACK_IMAGES.length;
   return FALLBACK_IMAGES[i];
-}
-
-function toFloat(v) {
-  if (v == null) return null;
-  const n = parseFloat(String(v));
-  return Number.isFinite(n) ? n : null;
-}
-
-function isFiniteNum(n) {
-  return typeof n === "number" && Number.isFinite(n);
-}
-
-function formatAED(n) {
-  return new Intl.NumberFormat("en-AE").format(n);
-}
-
-function computeMinPriceFromUnitVariations(unitVariations) {
-  const prices = Array.isArray(unitVariations)
-    ? unitVariations
-        .map((uv) => parsePriceAED(uv?.starting_price))
-        .filter((n) => Number.isFinite(n))
-    : [];
-  return prices.length ? Math.min(...prices) : null;
-}
-
-function parsePriceAED(v) {
-  if (!v || typeof v !== "string") return null;
-  const s = v.trim().toUpperCase();
-  const m = s.match(/^([\d.]+)\s*([MK])$/);
-  if (!m) return null;
-
-  const num = parseFloat(m[1]);
-  if (!Number.isFinite(num)) return null;
-
-  const mult = m[2] === "M" ? 1_000_000 : 1_000;
-  return Math.round(num * mult);
-}
-
-// You can map these properly once you confirm what the codes mean
-function salesStatusLabel(code) {
-  const map = {
-    1: "Status 1",
-    2: "Status 2",
-    3: "Status 3",
-    4: "Status 4",
-  };
-  return map[code] ?? (code == null ? "Unknown" : `Status ${code}`);
-}
-
-function isLikelyFeatured(p) {
-  const hasImage = !!p.image;
-  const hasPin = !!(p.latitude && p.longitude);
-  const hasUnits = Array.isArray(p.unit_variations) && p.unit_variations.length > 0;
-  return hasImage && hasPin && hasUnits;
-}
-
-function summarizeUnitTypes(unitVariations) {
-  if (!Array.isArray(unitVariations) || unitVariations.length === 0) return "";
-  const types = uniq(unitVariations.map((uv) => uv?.unit_type).filter(Boolean));
-  if (!types.length) return "";
-  if (types.length <= 3) return types.join(" • ");
-  return `${types.slice(0, 3).join(" • ")} • +${types.length - 3}`;
-}
-
-function sortProjects(a, b, sortBy) {
-  const nameA = (a.title ?? "").toLowerCase();
-  const nameB = (b.title ?? "").toLowerCase();
-
-  const compA = parseCompletionDateSortable(a.completionDate);
-  const compB = parseCompletionDateSortable(b.completionDate);
-
-  switch (sortBy) {
-    case "price_asc":
-      return nullsLastAsc(a.minPrice, b.minPrice) || nameA.localeCompare(nameB);
-    case "price_desc":
-      return nullsLastDesc(a.minPrice, b.minPrice) || nameA.localeCompare(nameB);
-    case "completion_asc":
-      return nullsLastAsc(compA, compB) || nameA.localeCompare(nameB);
-    case "completion_desc":
-      return nullsLastDesc(compA, compB) || nameA.localeCompare(nameB);
-    case "name_desc":
-      return nameB.localeCompare(nameA);
-    case "name_asc":
-      return nameA.localeCompare(nameB);
-    case "featured_then_name":
-    default: {
-      const fa = a.featured ? 1 : 0;
-      const fb = b.featured ? 1 : 0;
-      return fb - fa || nameA.localeCompare(nameB);
-    }
-  }
-}
-
-function nullsLastAsc(a, b) {
-  const aNull = a == null || Number.isNaN(a);
-  const bNull = b == null || Number.isNaN(b);
-  if (aNull && bNull) return 0;
-  if (aNull) return 1;
-  if (bNull) return -1;
-  return a - b;
-}
-
-function nullsLastDesc(a, b) {
-  const aNull = a == null || Number.isNaN(a);
-  const bNull = b == null || Number.isNaN(b);
-  if (aNull && bNull) return 0;
-  if (aNull) return 1;
-  if (bNull) return -1;
-  return b - a;
-}
-
-// Feed has completion_date like "Q3 2026"
-function parseCompletionDateSortable(s) {
-  if (!s || typeof s !== "string") return null;
-  const t = s.trim().toUpperCase();
-  const m = t.match(/^Q([1-4])\s+(\d{4})$/);
-  if (!m) return null;
-  const q = parseInt(m[1], 10);
-  const y = parseInt(m[2], 10);
-  return y * 10 + q;
 }
