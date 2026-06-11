@@ -1,0 +1,94 @@
+backend:
+  name: github
+  repo: chrisjgaze/GWProperty
+  branch: main
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: custom_properties
+    label: Custom Properties
+    files:
+      - name: listings
+        label: Properties
+        file: public/custom-properties.json
+        format: json
+        fields:
+          - label: Properties
+            name: properties
+            widget: list
+            summary: "{{fields.name}} — {{fields.community}}"
+            fields:
+              - label: Unique ID
+                name: id
+                widget: string
+                hint: "Required. Use a unique value such as marina-view-1204."
+              - label: Property Name
+                name: name
+                widget: string
+              - label: Community
+                name: community
+                widget: string
+                required: false
+              - label: Developer
+                name: developer
+                widget: string
+                required: false
+              - label: Cover Image
+                name: image
+                widget: image
+                required: false
+              - label: Price (AED)
+                name: price
+                widget: number
+                value_type: int
+                min: 0
+                required: false
+              - label: Status
+                name: sales_status
+                widget: select
+                options:
+                  - Available
+                  - Reserved
+                  - Sold
+                  - Off-plan
+                default: Available
+              - label: Completion Date
+                name: completion_date
+                widget: string
+                required: false
+                hint: "For example: Q3 2027"
+              - label: Latitude
+                name: latitude
+                widget: number
+                value_type: float
+                min: -90
+                max: 90
+                required: false
+              - label: Longitude
+                name: longitude
+                widget: number
+                value_type: float
+                min: -180
+                max: 180
+                required: false
+              - label: Featured
+                name: featured
+                widget: boolean
+                default: false
+              - label: Unit Types
+                name: unit_variations
+                widget: list
+                required: false
+                summary: "{{fields.unit_type}} — {{fields.starting_price}}"
+                fields:
+                  - label: Unit Type
+                    name: unit_type
+                    widget: string
+                    hint: "For example: 2 B/R"
+                  - label: Starting Price
+                    name: starting_price
+                    widget: string
+                    required: false
+                    hint: "For example: 1.5 M"

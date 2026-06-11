@@ -10,6 +10,7 @@ import {
 
 /**
  * Expects: /public/properties.json
+ * Optionally merges: /public/custom-properties.json
  * Feed shape:
  *  {
  *    "status": "...",
@@ -50,27 +51,23 @@ export default function ListingsApp() {
   useEffect(() => {
     let cancelled = false;
 
-    fetch("/properties.json", { cache: "no-store" })
-      .then(async (r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const text = await r.text();
-        if (!text.trim()) throw new Error("properties.json is empty");
-
-        try {
-          return JSON.parse(text);
-        } catch (error) {
-          throw new Error(`properties.json is not valid JSON: ${error.message}`);
-        }
-      })
-      .then((payload) => {
+    Promise.all([
+      fetchJson("/properties.json"),
+      fetchJson("/custom-properties.json").catch((error) => {
+        console.warn("[CUSTOM PROPERTIES]", error);
+        return { properties: [] };
+      }),
+    ])
+      .then(([feedPayload, customPayload]) => {
         if (cancelled) return;
 
-        const projects = extractProjects(payload);
-        if (!Array.isArray(projects)) {
+        const feedProjects = extractProjects(feedPayload);
+        const customProjects = extractProjects(customPayload) ?? [];
+        if (!Array.isArray(feedProjects)) {
           throw new Error("Invalid JSON: expected an array of projects");
         }
 
-        const normalized = projects.map(normalizeProject);
+        const normalized = [...feedProjects, ...customProjects].map(normalizeProject);
         setAll(normalized);
         setLoadError("");
       })
@@ -415,4 +412,18 @@ function getFallbackByIndex(index, offset = 0) {
   const safeIndex = Number.isFinite(index) ? index : 0;
   const i = (safeIndex + offset) % FALLBACK_IMAGES.length;
   return FALLBACK_IMAGES[i];
+}
+
+async function fetchJson(path) {
+  const response = await fetch(path, { cache: "no-store" });
+  if (!response.ok) throw new Error(`${path} returned HTTP ${response.status}`);
+
+  const text = await response.text();
+  if (!text.trim()) throw new Error(`${path} is empty`);
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`${path} is not valid JSON: ${error.message}`);
+  }
 }

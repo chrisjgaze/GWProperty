@@ -1,0 +1,1 @@
+node decrypt.cjs response.txt 49cb74d0f25952848bd894499514ed16 >>out.txt

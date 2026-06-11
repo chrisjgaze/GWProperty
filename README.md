@@ -1,4 +1,26 @@
-# Astro Starter Kit: Basics
+# GWProperty
+
+Static Astro property listings deployed on Netlify.
+
+## Property Admin
+
+Custom properties are managed at `/admin/` using Decap CMS. They are stored separately from the
+source feed in `public/custom-properties.json`; the listings app merges both files in the browser.
+
+The admin uses the GitHub backend and commits changes to `main`, which triggers a Netlify rebuild.
+Before using it in production, configure GitHub authentication for the Netlify site:
+
+1. In GitHub, create an OAuth app with authorization callback URL
+   `https://api.netlify.com/auth/done`.
+2. In Netlify, open **Project configuration > Access & security > OAuth**, install the GitHub
+   provider, and enter the OAuth client ID and secret.
+3. Open `https://YOUR-SITE.netlify.app/admin/` and sign in with a GitHub account that has push
+   access to the repository.
+
+Uploaded images are committed to `public/uploads/`. Keep uploads reasonably small because they are
+stored in the Git repository and shipped with every deploy.
+
+## Development
 
 ```sh
 npm create astro@latest -- --template basics

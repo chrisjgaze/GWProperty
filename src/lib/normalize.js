@@ -35,7 +35,11 @@ export function normalizeProject(p, index = 0) {
     ""
   );
   const statusValue = p.sales_status ?? p.status ?? p.statusLabel ?? p.salesStatus;
-  const featured = Boolean(p.featured ?? p.display_rocket) || isLikelyFeatured(p, lat, lng, unitVariations);
+  const featuredValue = p.featured ?? p.display_rocket;
+  const featured =
+    featuredValue == null
+      ? isLikelyFeatured(p, lat, lng, unitVariations)
+      : Boolean(featuredValue);
 
   return {
     id: String(p.id ?? p.slug ?? `property-${index}`),
