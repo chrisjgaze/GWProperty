@@ -7,12 +7,96 @@
     <title>Manage Custom Properties | Property Admin</title>
     <link rel="stylesheet" href="/admin/admin.css" />
   </head>
-  <body class="cms-admin">
-    <nav class="cms-nav" aria-label="Admin navigation">
-      <a href="/admin/">Admin home</a>
-      <a href="/admin/existing.html">Browse existing feed</a>
-      <a href="/" target="_blank" rel="noreferrer">View website</a>
-    </nav>
-    <script src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script>
+  <body class="feed-admin">
+    <header class="admin-topbar">
+      <a class="admin-brand" href="/admin/">
+        <span class="admin-brand__mark">DD</span>
+        <span>Property Admin</span>
+      </a>
+      <nav class="admin-links" aria-label="Admin navigation">
+        <a href="/admin/existing.html">Existing feed</a>
+        <a class="is-active" href="/admin/manage.html">Custom properties</a>
+        <a href="/" target="_blank" rel="noreferrer">Website</a>
+      </nav>
+    </header>
+
+    <header class="feed-header custom-header">
+      <div>
+        <p class="feed-eyebrow">Editable properties</p>
+        <h1>Custom properties</h1>
+        <p class="feed-intro">
+          Add and manage your own houses, apartments, villas, and other listings.
+        </p>
+      </div>
+      <div class="custom-header__actions">
+        <div class="feed-summary" aria-label="Custom property summary">
+          <strong id="total-count">—</strong>
+          <span>custom properties</span>
+        </div>
+        <a class="custom-add-button" href="/admin/cms.html#/collections/custom_properties/new">
+          <span aria-hidden="true">+</span> Add property
+        </a>
+      </div>
+    </header>
+
+    <main class="feed-main">
+      <section class="feed-toolbar custom-toolbar" aria-label="Property filters">
+        <label class="feed-toolbar__search">
+          <span>Search</span>
+          <input id="search" type="search" placeholder="Name, community, developer or ID" />
+        </label>
+        <label>
+          <span>Property type</span>
+          <select id="property-type">
+            <option value="">All property types</option>
+          </select>
+        </label>
+        <label>
+          <span>Status</span>
+          <select id="sales-status">
+            <option value="">All statuses</option>
+          </select>
+        </label>
+        <button class="admin-button feed-clear" id="clear-filters" type="button">Clear filters</button>
+      </section>
+
+      <div class="feed-status" id="status" role="status">Loading custom properties...</div>
+      <section class="feed-grid" id="properties" aria-label="Custom properties"></section>
+
+      <section class="custom-empty" id="empty-state" hidden>
+        <span class="custom-empty__mark" aria-hidden="true">+</span>
+        <h2>Add your first custom property</h2>
+        <p>Create a house, apartment, villa, townhouse, or another property listing.</p>
+        <a class="custom-add-button" href="/admin/cms.html#/collections/custom_properties/new">
+          Add property
+        </a>
+      </section>
+    </main>
+
+    <template id="custom-property-card">
+      <article class="feed-card custom-card">
+        <div class="custom-card__media">
+          <img class="feed-card__image" alt="" loading="lazy" referrerpolicy="no-referrer" />
+          <span class="custom-card__type"></span>
+        </div>
+        <div class="feed-card__body">
+          <div class="feed-card__heading">
+            <h2></h2>
+            <span class="feed-card__status"></span>
+          </div>
+          <p class="feed-card__location"></p>
+          <dl>
+            <div><dt>Starting price</dt><dd class="feed-card__price"></dd></div>
+            <div><dt>Completion</dt><dd class="feed-card__completion"></dd></div>
+          </dl>
+          <div class="custom-card__actions">
+            <a class="custom-card__edit">Edit property</a>
+            <a class="custom-card__website" href="/" target="_blank" rel="noreferrer">View website</a>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="/admin/manage.js"></script>
   </body>
 </html>

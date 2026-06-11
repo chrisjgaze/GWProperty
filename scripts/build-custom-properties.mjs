@@ -16,7 +16,10 @@ const filenames = (await readdir(sourceDirectory))
 
 for (const filename of filenames) {
   const property = JSON.parse(await readFile(path.join(sourceDirectory, filename), "utf8"));
-  properties.push(property);
+  properties.push({
+    ...property,
+    _adminSlug: path.basename(filename, ".json"),
+  });
 }
 
 try {

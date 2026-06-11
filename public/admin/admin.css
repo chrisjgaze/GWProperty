@@ -299,6 +299,34 @@ body {
   line-height: 1.1;
 }
 
+.custom-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.custom-add-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid #fff;
+  border-radius: 9px;
+  color: #174838;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
+}
+
+.custom-add-button span {
+  font-size: 20px;
+  line-height: 1;
+}
+
 .feed-main {
   max-width: 1440px;
   margin: 0 auto;
@@ -459,6 +487,98 @@ body {
   color: #245e48;
   font-size: 12px;
   font-weight: 800;
+}
+
+.custom-card {
+  cursor: default;
+}
+
+.custom-card:hover {
+  transform: none;
+}
+
+.custom-card__media {
+  position: relative;
+}
+
+.custom-card__type {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgb(19 61 48 / 88%);
+  font-size: 11px;
+  font-weight: 800;
+  backdrop-filter: blur(4px);
+}
+
+.custom-card__actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid #e6ece9;
+}
+
+.custom-card__actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #c4d3cc;
+  border-radius: 7px;
+  color: #245e48;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.custom-card__actions .custom-card__edit {
+  border-color: #245e48;
+  color: #fff;
+  background: #245e48;
+}
+
+.custom-empty {
+  max-width: 660px;
+  margin: 70px auto;
+  padding: 48px 28px;
+  border: 1px dashed #a9bdb4;
+  border-radius: 16px;
+  background: #fff;
+  text-align: center;
+}
+
+.custom-empty__mark {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 18px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #174838;
+  font-size: 28px;
+}
+
+.custom-empty h2 {
+  margin: 0;
+  color: #173d31;
+}
+
+.custom-empty p {
+  margin: 10px 0 22px;
+  color: #667a72;
+}
+
+.custom-empty .custom-add-button {
+  color: #fff;
+  background: #174838;
+  box-shadow: none;
 }
 
 .feed-more {
@@ -689,6 +809,11 @@ body {
     padding: 26px 20px;
   }
 
+  .custom-header__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .feed-summary {
     padding: 15px 0 0;
     border-top: 1px solid rgb(255 255 255 / 24%);
@@ -701,6 +826,10 @@ body {
 
   .feed-clear {
     width: 100%;
+  }
+
+  .custom-card__actions {
+    grid-template-columns: 1fr;
   }
 
   .property-detail__hero img {
