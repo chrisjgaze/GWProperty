@@ -4,14 +4,51 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Property Admin</title>
+    <title>Property Admin | Dubai Dream Off-Plan</title>
     <link rel="stylesheet" href="/admin/admin.css" />
   </head>
-  <body>
-    <nav class="admin-nav" aria-label="Admin navigation">
-      <a href="/admin/existing.html">View existing properties</a>
-      <a href="/" target="_blank" rel="noreferrer">View website</a>
-    </nav>
-    <script src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script>
+  <body class="admin-home">
+    <header class="admin-topbar">
+      <a class="admin-brand" href="/admin/">
+        <span class="admin-brand__mark">DD</span>
+        <span>Property Admin</span>
+      </a>
+      <a class="admin-text-link" href="/" target="_blank" rel="noreferrer">View website</a>
+    </header>
+
+    <main class="admin-home__main">
+      <div class="admin-home__intro">
+        <p class="admin-kicker">Dubai Dream Off-Plan</p>
+        <h1>Property management</h1>
+        <p>Choose the property source you want to work with.</p>
+      </div>
+
+      <section class="admin-choice-grid" aria-label="Property management options">
+        <a class="admin-choice admin-choice--primary" href="/admin/manage.html">
+          <span class="admin-choice__number">01</span>
+          <div>
+            <span class="admin-choice__tag">Editable</span>
+            <h2>Manage custom properties</h2>
+            <p>Add, update, or remove properties created through this admin.</p>
+          </div>
+          <span class="admin-choice__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="admin-choice" href="/admin/existing.html">
+          <span class="admin-choice__number">02</span>
+          <div>
+            <span class="admin-choice__tag">Read-only</span>
+            <h2>Browse existing feed</h2>
+            <p>Search all imported properties and inspect their complete source details.</p>
+          </div>
+          <span class="admin-choice__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
+
+      <p class="admin-home__note">
+        Imported feed properties are intentionally read-only. Custom properties are stored
+        separately and can be safely edited.
+      </p>
+    </main>
   </body>
 </html>

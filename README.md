@@ -4,7 +4,8 @@ Static Astro property listings deployed on Netlify.
 
 ## Property Admin
 
-Custom properties are managed at `/admin/` using Decap CMS. They are stored separately from the
+The `/admin/` dashboard links to the Decap CMS custom-property editor and the read-only existing
+feed browser. Custom properties are stored separately from the
 source feed in `public/custom-properties.json`; the listings app merges both files in the browser.
 The admin's **View existing properties** link opens a searchable, read-only browser for
 `public/properties.json`.

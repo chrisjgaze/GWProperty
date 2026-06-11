@@ -8,24 +8,35 @@
     <link rel="stylesheet" href="/admin/admin.css" />
   </head>
   <body class="feed-admin">
+    <header class="admin-topbar">
+      <a class="admin-brand" href="/admin/">
+        <span class="admin-brand__mark">DD</span>
+        <span>Property Admin</span>
+      </a>
+      <nav class="admin-links" aria-label="Admin navigation">
+        <a class="is-active" href="/admin/existing.html">Existing feed</a>
+        <a href="/admin/manage.html">Custom properties</a>
+        <a href="/" target="_blank" rel="noreferrer">Website</a>
+      </nav>
+    </header>
+
     <header class="feed-header">
       <div>
-        <p class="feed-eyebrow">Property Admin</p>
-        <h1>Existing Feed Properties</h1>
+        <p class="feed-eyebrow">Read-only source</p>
+        <h1>Existing properties</h1>
         <p class="feed-intro">
-          Search and inspect the properties supplied by <code>properties.json</code>. This screen is
-          read-only.
+          Search the imported feed, then select a property to inspect all available details.
         </p>
       </div>
-      <div class="feed-actions">
-        <a class="admin-button admin-button--primary" href="/admin/">Manage custom properties</a>
-        <a class="admin-button" href="/" target="_blank" rel="noreferrer">View website</a>
+      <div class="feed-summary" aria-label="Feed summary">
+        <strong id="total-count">—</strong>
+        <span>properties in feed</span>
       </div>
     </header>
 
     <main class="feed-main">
       <section class="feed-toolbar" aria-label="Property filters">
-        <label>
+        <label class="feed-toolbar__search">
           <span>Search</span>
           <input id="search" type="search" placeholder="Name, community, developer or ID" />
         </label>
@@ -41,6 +52,7 @@
             <option value="">All developers</option>
           </select>
         </label>
+        <button class="admin-button feed-clear" id="clear-filters" type="button">Clear filters</button>
       </section>
 
       <div class="feed-status" id="status" role="status">Loading existing properties...</div>
@@ -49,7 +61,7 @@
     </main>
 
     <template id="property-card">
-      <article class="feed-card">
+      <button class="feed-card" type="button">
         <img class="feed-card__image" alt="" loading="lazy" referrerpolicy="no-referrer" />
         <div class="feed-card__body">
           <div class="feed-card__heading">
@@ -62,9 +74,20 @@
             <div><dt>Completion</dt><dd class="feed-card__completion"></dd></div>
             <div><dt>Starting price</dt><dd class="feed-card__price"></dd></div>
           </dl>
+          <span class="feed-card__open">View all details <span aria-hidden="true">&rarr;</span></span>
         </div>
-      </article>
+      </button>
     </template>
+
+    <dialog class="property-dialog" id="property-dialog">
+      <div class="property-dialog__shell">
+        <header class="property-dialog__topbar">
+          <span>Property details</span>
+          <button class="dialog-close" id="dialog-close" type="button" aria-label="Close details">×</button>
+        </header>
+        <div class="property-detail" id="property-detail"></div>
+      </div>
+    </dialog>
 
     <script src="/admin/existing.js"></script>
   </body>

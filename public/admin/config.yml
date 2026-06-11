@@ -8,10 +8,10 @@ public_folder: /uploads
 
 collections:
   - name: custom_properties
-    label: Custom Properties
+    label: Custom properties
     files:
       - name: listings
-        label: Properties
+        label: Manage properties
         file: public/custom-properties.json
         format: json
         fields:
