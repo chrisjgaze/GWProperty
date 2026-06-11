@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Existing Properties | Property Admin</title>
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body class="feed-admin">
+    <header class="feed-header">
+      <div>
+        <p class="feed-eyebrow">Property Admin</p>
+        <h1>Existing Feed Properties</h1>
+        <p class="feed-intro">
+          Search and inspect the properties supplied by <code>properties.json</code>. This screen is
+          read-only.
+        </p>
+      </div>
+      <div class="feed-actions">
+        <a class="admin-button admin-button--primary" href="/admin/">Manage custom properties</a>
+        <a class="admin-button" href="/" target="_blank" rel="noreferrer">View website</a>
+      </div>
+    </header>
+
+    <main class="feed-main">
+      <section class="feed-toolbar" aria-label="Property filters">
+        <label>
+          <span>Search</span>
+          <input id="search" type="search" placeholder="Name, community, developer or ID" />
+        </label>
+        <label>
+          <span>Community</span>
+          <select id="community">
+            <option value="">All communities</option>
+          </select>
+        </label>
+        <label>
+          <span>Developer</span>
+          <select id="developer">
+            <option value="">All developers</option>
+          </select>
+        </label>
+      </section>
+
+      <div class="feed-status" id="status" role="status">Loading existing properties...</div>
+      <section class="feed-grid" id="properties" aria-label="Existing properties"></section>
+      <button class="admin-button feed-more" id="load-more" type="button" hidden>Load more</button>
+    </main>
+
+    <template id="property-card">
+      <article class="feed-card">
+        <img class="feed-card__image" alt="" loading="lazy" referrerpolicy="no-referrer" />
+        <div class="feed-card__body">
+          <div class="feed-card__heading">
+            <h2></h2>
+            <span class="feed-card__status"></span>
+          </div>
+          <p class="feed-card__location"></p>
+          <dl>
+            <div><dt>ID</dt><dd class="feed-card__id"></dd></div>
+            <div><dt>Completion</dt><dd class="feed-card__completion"></dd></div>
+            <div><dt>Starting price</dt><dd class="feed-card__price"></dd></div>
+          </dl>
+        </div>
+      </article>
+    </template>
+
+    <script src="/admin/existing.js"></script>
+  </body>
+</html>
