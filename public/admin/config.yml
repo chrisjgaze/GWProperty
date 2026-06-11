@@ -3,92 +3,139 @@ backend:
   repo: chrisjgaze/GWProperty
   branch: main
 
+site_url: https://dubaidreamoffplan.com
+display_url: https://dubaidreamoffplan.com
+logo_url: /favicon.svg
+show_preview_links: false
+
 media_folder: public/uploads
 public_folder: /uploads
+
+editor:
+  preview: false
 
 collections:
   - name: custom_properties
     label: Custom properties
-    files:
-      - name: listings
-        label: Manage properties
-        file: public/custom-properties.json
-        format: json
+    label_singular: Property
+    description: Add and manage properties created by your team.
+    folder: public/custom-properties
+    create: true
+    delete: true
+    extension: json
+    format: json
+    identifier_field: name
+    summary: "{{name}} — {{community}} — {{property_type}}"
+    sortable_fields:
+      fields:
+        - name
+        - community
+        - developer
+        - completion_date
+      default:
+        field: name
+        direction: Ascending
+    view_filters:
+      - label: Featured
+        field: featured
+        pattern: true
+      - label: Available
+        field: sales_status
+        pattern: Available
+      - label: Off-plan
+        field: sales_status
+        pattern: Off-plan
+    fields:
+      - label: Property ID
+        name: id
+        widget: string
+        hint: "Required unique ID, for example: marina-view-1204."
+      - label: Property name
+        name: name
+        widget: string
+      - label: Property type
+        name: property_type
+        widget: select
+        default: Apartment
+        options:
+          - Apartment
+          - Villa
+          - Townhouse
+          - House
+          - Penthouse
+          - Duplex
+          - Studio
+          - Land
+          - Commercial
+          - Other
+      - label: Cover image
+        name: image
+        widget: image
+      - label: Community
+        name: community
+        widget: string
+      - label: Developer
+        name: developer
+        widget: string
+        required: false
+      - label: Sales status
+        name: sales_status
+        widget: select
+        options:
+          - Available
+          - Reserved
+          - Sold
+          - Off-plan
+        default: Available
+      - label: Completion date
+        name: completion_date
+        widget: string
+        required: false
+        hint: "For example: Q3 2027 or Ready."
+      - label: Featured property
+        name: featured
+        widget: boolean
+        default: false
+      - label: Starting price (AED)
+        name: price
+        widget: number
+        value_type: int
+        min: 0
+        required: false
+        hint: "Optional headline price shown on the property card."
+      - label: Latitude
+        name: latitude
+        widget: number
+        value_type: float
+        min: -90
+        max: 90
+        required: false
+        hint: "Optional. Used to show the property on the map."
+      - label: Longitude
+        name: longitude
+        widget: number
+        value_type: float
+        min: -180
+        max: 180
+        required: false
+        hint: "Optional. Used to show the property on the map."
+      - label: Units and prices
+        name: unit_variations
+        widget: list
+        required: false
+        summary: "{{fields.unit_type}} — {{fields.starting_price}}"
         fields:
-          - label: Properties
-            name: properties
-            widget: list
-            summary: "{{fields.name}} — {{fields.community}}"
-            fields:
-              - label: Unique ID
-                name: id
-                widget: string
-                hint: "Required. Use a unique value such as marina-view-1204."
-              - label: Property Name
-                name: name
-                widget: string
-              - label: Community
-                name: community
-                widget: string
-                required: false
-              - label: Developer
-                name: developer
-                widget: string
-                required: false
-              - label: Cover Image
-                name: image
-                widget: image
-                required: false
-              - label: Price (AED)
-                name: price
-                widget: number
-                value_type: int
-                min: 0
-                required: false
-              - label: Status
-                name: sales_status
-                widget: select
-                options:
-                  - Available
-                  - Reserved
-                  - Sold
-                  - Off-plan
-                default: Available
-              - label: Completion Date
-                name: completion_date
-                widget: string
-                required: false
-                hint: "For example: Q3 2027"
-              - label: Latitude
-                name: latitude
-                widget: number
-                value_type: float
-                min: -90
-                max: 90
-                required: false
-              - label: Longitude
-                name: longitude
-                widget: number
-                value_type: float
-                min: -180
-                max: 180
-                required: false
-              - label: Featured
-                name: featured
-                widget: boolean
-                default: false
-              - label: Unit Types
-                name: unit_variations
-                widget: list
-                required: false
-                summary: "{{fields.unit_type}} — {{fields.starting_price}}"
-                fields:
-                  - label: Unit Type
-                    name: unit_type
-                    widget: string
-                    hint: "For example: 2 B/R"
-                  - label: Starting Price
-                    name: starting_price
-                    widget: string
-                    required: false
-                    hint: "For example: 1.5 M"
+          - label: Unit type
+            name: unit_type
+            widget: string
+            hint: "For example: 3 bedroom villa or 2 B/R apartment."
+          - label: Starting price
+            name: starting_price
+            widget: string
+            required: false
+            hint: "For example: 1.5 M or 950 K."
+      - label: Marketing label
+        name: label
+        widget: string
+        required: false
+        hint: "For example: Launch prices or Limited availability."

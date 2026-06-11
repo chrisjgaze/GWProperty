@@ -13,8 +13,8 @@ export function extractProjects(payload) {
 }
 
 export function normalizeProject(p, index = 0) {
-  const lat = firstCoordinate(p.latitude, p.lat);
-  const lng = firstCoordinate(p.longitude, p.lng, p.lon);
+  const lat = firstCoordinate(p.latitude, p.location_details?.latitude, p.lat);
+  const lng = firstCoordinate(p.longitude, p.location_details?.longitude, p.lng, p.lon);
   const unitVariations = asArray(p.unit_variations ?? p.unitVariations ?? p.units);
   const minPrice = firstPrice(
     p.minPrice,
@@ -55,7 +55,7 @@ export function normalizeProject(p, index = 0) {
     statusLabel: salesStatusLabel(statusValue),
     minPrice,
     featured,
-    unitTypesLabel: summarizeUnitTypes(unitVariations),
+    unitTypesLabel: summarizeUnitTypes(unitVariations) || firstText(p.property_type),
     raw: p,
   };
 }

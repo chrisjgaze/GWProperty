@@ -10,7 +10,7 @@ import {
 
 /**
  * Expects: /public/properties.json
- * Optionally merges: /public/custom-properties.json
+ * Optionally merges: /public/custom-properties-index.json
  * Feed shape:
  *  {
  *    "status": "...",
@@ -53,7 +53,7 @@ export default function ListingsApp() {
 
     Promise.all([
       fetchJson("/properties.json"),
-      fetchJson("/custom-properties.json").catch((error) => {
+      fetchJson("/custom-properties-index.json").catch((error) => {
         console.warn("[CUSTOM PROPERTIES]", error);
         return { properties: [] };
       }),
