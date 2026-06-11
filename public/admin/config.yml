@@ -27,14 +27,10 @@ collections:
     identifier_field: name
     summary: "{{name}} — {{community}} — {{property_type}}"
     sortable_fields:
-      fields:
-        - name
-        - community
-        - developer
-        - completion_date
-      default:
-        field: name
-        direction: Ascending
+      - name
+      - community
+      - developer
+      - completion_date
     view_filters:
       - label: Featured
         field: featured
