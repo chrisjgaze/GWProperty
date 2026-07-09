@@ -1,131 +1,314 @@
 ---
-import ListingsApp from "../components/ListingsApp.jsx";
-import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/app.css";
+import LeadCaptureForm from "../components/LeadCaptureForm.jsx";
+
+const featuredProjects = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1745750434535-5943ef2fd31a?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    status: "Handover 2027",
+    community: "Emaar Beachfront",
+    name: "Marina Vista",
+    blurb: "Sea-facing 1–3 bed residences on a private island, minutes from Dubai Marina.",
+    price: "AED 2.1M",
+    plan: "80/20",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1749273858638-ea678cb48e94?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    status: "Selling fast",
+    community: "Downtown Dubai",
+    name: "The Grand Boulevard",
+    blurb: "Burj Khalifa views with a 5-year post-handover payment plan.",
+    price: "AED 1.6M",
+    plan: "60/40",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1777919541982-dcb34c146a2d?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    status: "New launch",
+    community: "Dubai Hills Estate",
+    name: "Golf Grove Villas",
+    blurb: "Family townhouses beside an 18-hole championship course and central park.",
+    price: "AED 3.4M",
+    plan: "70/30",
+  },
+];
+
+const stats = [
+  ["120+", "Live Projects"],
+  ["7–9%", "Avg. Net Yield"],
+  ["0%", "Buyer Commission"],
+  ["10yr", "Golden Visa Eligible"],
+];
+
+const benefits = [
+  ["0% Property Tax", "No capital-gains or annual property tax on Dubai real estate."],
+  ["100% Ownership", "Full freehold ownership for foreign investors in designated zones."],
+  ["Golden Visa", "Investments from AED 2M qualify for a 10-year residency visa."],
+  ["Escrow Protected", "Every payment held in a RERA-regulated escrow account."],
+];
+
+const milestones = [
+  ["1", "10%", "On booking", "Reserve your unit and lock the launch price."],
+  ["2", "40%", "During build", "Spread across construction milestones."],
+  ["3", "20%", "On handover", "Due when you collect your keys."],
+  ["4", "30%", "Post-handover", "Paid over the years after you move in."],
+];
+
+const developers = ["EMAAR", "DAMAC", "SOBHA", "NAKHEEL", "MERAAS", "BINGHATTI"];
 ---
 
-<SiteLayout
-  title="Dubai Dream Off-Plan | dubaidreamoffplan.com"
-  description="Browse Dubai off-plan projects, compare communities, and filter by developer, status, and price on Dubai Dream Off-Plan."
->
-  <main>
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <div class="eyebrow">Dubai's curated off-plan marketplace</div>
-          <h1>Find the next landmark address before the public launch.</h1>
-          <p>
-            Explore Dubai's newest off-plan releases in one place. Filter by community, developer,
-            and status to shortlist the right investment in minutes.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-green" href="#projects">Browse New Projects</a>
-            <a class="btn btn-outline hero-secondary" href="#why-invest">Why Dubai Off-Plan</a>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Hand-picked Dubai off-plan projects with flexible payment plans, verified escrow, and independent buyer advisory."
+    />
+    <title>Dubai Dream Off-Plan</title>
+  </head>
+  <body class="landing-body">
+    <div class="landing">
+      <header class="landing-nav">
+        <nav class="landing-nav-inner">
+          <a class="landing-brand" href="#top" aria-label="Dubai Dream Off-Plan">
+            <span class="landing-brand-mark">DD</span>
+            <span class="landing-brand-text">
+              <span>Dubai Dream</span>
+              <span>Off-Plan</span>
+            </span>
+          </a>
+          <div class="landing-nav-group">
+            <div class="landing-nav-links">
+              <a href="#projects">Projects</a>
+              <a href="#why">Why Dubai</a>
+              <a href="#plans">Payment Plans</a>
+              <a href="#developers">Developers</a>
+            </div>
+            <a class="landing-nav-cta" href="#inquire">Get Insider Access</a>
           </div>
-          <div class="hero-stats">
-            <div>
-              <div class="stat-value">350+</div>
-              <div class="stat-label">Live projects</div>
-            </div>
-            <div>
-              <div class="stat-value">42</div>
-              <div class="stat-label">Top developers</div>
-            </div>
-            <div>
-              <div class="stat-value">24/7</div>
-              <div class="stat-label">Market tracking</div>
+        </nav>
+      </header>
+
+      <main>
+        <section id="top" class="landing-hero">
+          <img
+            class="landing-hero-image"
+            src="https://images.unsplash.com/photo-1749273858638-ea678cb48e94?fm=jpg&q=75&w=2400&auto=format&fit=crop"
+            alt=""
+            referrerpolicy="no-referrer"
+          />
+          <div class="landing-hero-scrim-x"></div>
+          <div class="landing-hero-scrim-y"></div>
+          <div class="landing-hero-inner">
+            <div class="landing-hero-copy">
+              <div class="landing-kicker landing-kicker-light">
+                <span></span>
+                Dubai Off-Plan Investment
+              </div>
+              <h1>
+                Own tomorrow's Dubai<br />
+                <span>at today's launch price.</span>
+              </h1>
+              <p>
+                Hand-picked off-plan projects from Emaar, DAMAC and Sobha — with flexible payment
+                plans, verified escrow, and a private advisor who works only for you.
+              </p>
+              <div class="landing-hero-actions">
+                <a class="landing-primary" href="#inquire">Get the Investor Shortlist</a>
+                <a class="landing-text-link landing-text-link-light" href="#projects">
+                  Explore projects →
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="hero-card">
-          <div class="card-eyebrow">This week's highlight</div>
-          <div class="card-title">Waterfront launches with flexible 10% down</div>
-          <ul class="card-list">
-            <li>Priority access to pre-launch prices</li>
-            <li>Compare payment plans side by side</li>
-            <li>Local expert review in 24 hours</li>
-          </ul>
-          <a class="btn btn-dark" href="/contact">Request Project Brochure</a>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section class="trust">
-      <div class="trust-inner">
-        <div class="trust-item">
-          <div class="trust-title">Verified inventory</div>
-          <div class="trust-sub">Direct access to official developer stock.</div>
+        <section class="landing-stat-bar">
+          <div class="landing-stat-grid">
+            {stats.map(([value, label], index) => (
+              <div class:list={["landing-stat", index > 0 && "landing-stat-bordered"]}>
+                <div>{value}</div>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="projects" class="landing-section landing-projects">
+          <div class="landing-section-head">
+            <div>
+              <div class="landing-kicker">
+                <span></span>
+                Featured Launches
+              </div>
+              <h2>Prime addresses, secured before completion</h2>
+            </div>
+            <a class="landing-text-link" href="#inquire">View full shortlist →</a>
+          </div>
+          <div class="landing-project-grid">
+            {featuredProjects.map((project) => (
+              <article class="landing-project-card">
+                <div class="landing-project-media">
+                  <img src={project.image} alt={project.name} referrerpolicy="no-referrer" />
+                  <span>{project.status}</span>
+                </div>
+                <div class="landing-project-body">
+                  <div class="landing-project-community">{project.community}</div>
+                  <h3>{project.name}</h3>
+                  <p>{project.blurb}</p>
+                  <div class="landing-project-meta">
+                    <div>
+                      <span>From</span>
+                      <strong>{project.price}</strong>
+                    </div>
+                    <div>
+                      <span>Plan</span>
+                      <strong>{project.plan}</strong>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="why" class="landing-why">
+          <div class="landing-why-inner">
+            <div>
+              <div class="landing-kicker">
+                <span></span>
+                Why Off-Plan Dubai
+              </div>
+              <h2>A market built for the patient investor</h2>
+              <p>
+                Zero capital-gains tax, 100% foreign ownership, and payment plans that stretch
+                years past handover. We surface the launches with genuine upside — and steer you
+                clear of the ones without it.
+              </p>
+              <div class="landing-benefits">
+                {benefits.map(([title, text]) => (
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="landing-why-image">
+              <img
+                src="https://images.unsplash.com/photo-1774552803490-1c95b9020453?fm=jpg&q=75&w=1600&auto=format&fit=crop"
+                alt=""
+                referrerpolicy="no-referrer"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="plans" class="landing-plans">
+          <div class="landing-plans-inner">
+            <div class="landing-centered-head">
+              <div class="landing-kicker landing-kicker-centered landing-kicker-light">
+                <span></span>
+                Payment Structure
+                <span></span>
+              </div>
+              <h2>Pay as it's built. Not before.</h2>
+            </div>
+            <div class="landing-milestones">
+              {milestones.map(([step, pct, stage, note]) => (
+                <div class="landing-milestone">
+                  <div>{step}</div>
+                  <strong>{pct}</strong>
+                  <span>{stage}</span>
+                  <p>{note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="developers" class="landing-developers">
+          <div>Direct inventory from Dubai's leading developers</div>
+          <div class="landing-developer-list">
+            {developers.map((developer) => (
+              <span>{developer}</span>
+            ))}
+          </div>
+        </section>
+
+        <section class="landing-testimonial">
+          <div>
+            <div class="landing-quote-mark">“</div>
+            <blockquote>
+              They shortlisted three launches, negotiated a better plan than the developer's own
+              agent, and never pushed. I closed on Emaar Beachfront from London in ten days.
+            </blockquote>
+            <strong>Rajan M.</strong>
+            <span>Investor · London → Emaar Beachfront</span>
+          </div>
+        </section>
+
+        <section id="inquire" class="landing-inquire">
+          <div class="landing-inquire-inner">
+            <div>
+              <div class="landing-kicker landing-kicker-light">
+                <span></span>
+                Get Insider Access
+              </div>
+              <h2>Your investor shortlist, in 24 hours.</h2>
+              <p>
+                Tell us your budget and goals. We'll send a curated set of off-plan launches matched
+                to your yield and cash-flow strategy — no obligation, no spam.
+              </p>
+              <div class="landing-assurances">
+                <div><span>✓</span>Independent — we represent you, not the developer.</div>
+                <div><span>✓</span>Zero buyer-side commission on your purchase.</div>
+                <div><span>✓</span>Verified escrow, handover dates and floor plans.</div>
+              </div>
+            </div>
+            <LeadCaptureForm client:load />
+          </div>
+        </section>
+      </main>
+
+      <footer class="landing-footer">
+        <div class="landing-footer-inner">
+          <div>
+            <div class="landing-footer-brand">
+              <span class="landing-brand-mark">DD</span>
+              <span>Dubai Dream Off-Plan</span>
+            </div>
+            <p>Independent off-plan advisory. We represent buyers, not developers.</p>
+            <a href="https://wa.me/971562445357">+971 56 244 5357 · WhatsApp</a>
+          </div>
+          <div>
+            <h3>Communities</h3>
+            <a href="#projects">Dubai Hills Estate</a>
+            <a href="#projects">Downtown Dubai</a>
+            <a href="#projects">Emaar Beachfront</a>
+            <a href="#projects">Dubai Creek Harbour</a>
+          </div>
+          <div>
+            <h3>Company</h3>
+            <a href="#why">Why Dubai</a>
+            <a href="#plans">Payment plans</a>
+            <a href="#inquire">Investor FAQ</a>
+            <a href="#inquire">Contact us</a>
+          </div>
         </div>
-        <div class="trust-item">
-          <div class="trust-title">Special launch terms</div>
-          <div class="trust-sub">Receive the most competitive payment plans.</div>
+        <div class="landing-footer-bottom">
+          <span>© 2026 Dubai Dream Off-Plan. All rights reserved.</span>
+          <span>Privacy policy · Terms</span>
         </div>
-        <div class="trust-item">
-          <div class="trust-title">Local specialists</div>
-          <div class="trust-sub">Guidance from Dubai-based consultants.</div>
-        </div>
-      </div>
-    </section>
+      </footer>
 
-    <section class="search-section" id="projects">
-      <div class="section-head">
-        <div>
-          <div class="section-eyebrow">Search projects</div>
-          <h2>Dubai's latest off-plan launches in one place</h2>
-        </div>
-        <p>
-          Use the filters to shortlist by community, developer, and completion date. Tap a listing
-          to highlight it on the map.
-        </p>
-      </div>
-      <ListingsApp client:load />
-    </section>
-
-    <section class="why-invest" id="why-invest">
-      <div class="why-shell">
-        <h2>Why invest in Dubai off-plan property?</h2>
-        <p>
-          Dubai offers a strong mix of tax efficiency, capital growth potential, and global demand,
-          making it one of the most active off-plan markets for international investors.
-        </p>
-
-        <div class="why-grid">
-          <article class="why-card">
-            <div class="why-icon why-icon--roi" aria-hidden="true"></div>
-            <h3>High Return on Investment</h3>
-            <p>
-              Off-plan launches can offer strong upside at handover, with competitive rental demand
-              across top communities.
-            </p>
-          </article>
-
-          <article class="why-card">
-            <div class="why-icon why-icon--plan" aria-hidden="true"></div>
-            <h3>Flexible Payment Plans</h3>
-            <p>
-              Developers offer phased plans that spread cost over construction, lowering initial
-              cash requirements.
-            </p>
-          </article>
-
-          <article class="why-card">
-            <div class="why-icon why-icon--secure" aria-hidden="true"></div>
-            <h3>Secure and Regulated</h3>
-            <p>
-              Transactions are governed by Dubai's regulatory framework and escrow protections that
-              improve buyer confidence.
-            </p>
-          </article>
-
-          <article class="why-card">
-            <div class="why-icon why-icon--team" aria-hidden="true"></div>
-            <h3>Trusted Off-Plan Guidance</h3>
-            <p>
-              Our team filters noise and helps you focus on projects that align with your budget,
-              timeline, and strategy.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-</SiteLayout>
+      <a class="landing-whatsapp" href="https://wa.me/971562445357">
+        <span></span>
+        Talk to an advisor
+      </a>
+    </div>
+  </body>
+</html>
