@@ -987,14 +987,14 @@ a.footer-link:hover{
   font-family:"Manrope", sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-.landing-body a{color:#b25738;text-decoration:none;}
-.landing-body a:hover{color:#8f4527;}
+.landing-body a{color:#8f4527;text-decoration:none;}
+.landing-body a:hover{color:#7a3a22;}
 .landing-body input,.landing-body select,.landing-body button{font-family:inherit;}
 .landing{
-  --landing-accent:#c56a44;
+  --landing-accent:#d9875e;
   --landing-accent-soft:#e2926c;
-  --landing-accent-ink:#b25738;
-  --landing-accent-dark:#a8532f;
+  --landing-accent-ink:#8f4527;
+  --landing-accent-dark:#e59a76;
   --landing-dark:#0f302e;
   --landing-darkest:#0a201e;
   max-width:100%;
@@ -1045,7 +1045,7 @@ a.footer-link:hover{
   font-size:10px;
   letter-spacing:2.4px;
   text-transform:uppercase;
-  color:#8a8175;
+  color:#675f55;
 }
 .landing-nav-group,.landing-nav-links{display:flex;align-items:center;}
 .landing-nav-group{gap:34px;}
@@ -1212,7 +1212,7 @@ a.footer-link:hover{
   font-size:11px;
   letter-spacing:1px;
   text-transform:uppercase;
-  color:#9a9184;
+  color:#6f675b;
 }
 .landing-project-meta strong{
   display:block;
@@ -1241,7 +1241,7 @@ a.footer-link:hover{
   margin:0 0 6px;
   color:var(--landing-dark);
 }
-.landing-benefits p{font-size:14px;line-height:1.55;color:#6b6459;margin:0;}
+.landing-benefits p{font-size:14px;line-height:1.55;color:#575147;margin:0;}
 .landing-why-image{position:relative;height:540px;border-radius:4px;overflow:hidden;}
 .landing-plans-inner{max-width:1240px;margin:0 auto;padding:96px 40px;}
 .landing-centered-head{text-align:center;max-width:640px;margin:0 auto 56px;}
@@ -1279,7 +1279,7 @@ a.footer-link:hover{
   font-size:12px;
   letter-spacing:3px;
   text-transform:uppercase;
-  color:#9a9184;
+  color:#6f675b;
   font-weight:600;
   margin-bottom:40px;
 }
@@ -1316,7 +1316,7 @@ a.footer-link:hover{
   letter-spacing:0;
 }
 .landing-testimonial strong{display:block;font-size:14px;font-weight:700;letter-spacing:.3px;}
-.landing-testimonial span{display:block;font-size:13px;color:#6b6459;margin-top:2px;}
+.landing-testimonial span{display:block;font-size:13px;color:#575147;margin-top:2px;}
 .landing-inquire-inner{
   max-width:1240px;
   margin:0 auto;
@@ -1350,13 +1350,13 @@ a.footer-link:hover{
   font-weight:600;
   margin:0 0 4px;
 }
-.landing-lead-form > p{font-size:13px;color:#8a8175;margin:0 0 10px;}
+.landing-lead-form > p{font-size:13px;color:#675f55;margin:0 0 10px;}
 .landing-lead-form label{display:block;}
 .landing-lead-form label span{
   font-size:12px;
   letter-spacing:.8px;
   text-transform:uppercase;
-  color:#8a8175;
+  color:#675f55;
   font-weight:600;
 }
 .landing-lead-form input,.landing-lead-form select{
@@ -1383,7 +1383,7 @@ a.footer-link:hover{
   cursor:pointer;
 }
 .landing-lead-form button:hover{background:var(--landing-accent-dark);}
-.landing-lead-form small{font-size:12px;color:#9a9184;text-align:center;margin:4px 0 0;}
+.landing-lead-form small{font-size:12px;color:#6f675b;text-align:center;margin:4px 0 0;}
 .landing-form-success{text-align:center;padding:40px 12px;animation:floatUp .5s ease both;}
 .landing-form-success div{
   width:64px;
@@ -1436,7 +1436,7 @@ a.footer-link:hover{
   color:var(--landing-accent-soft);
   font-weight:600;
 }
-.landing-footer h3{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#6b6459;margin:0 0 16px;}
+.landing-footer h3{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#928a7d;margin:0 0 16px;}
 .landing-footer-bottom{
   max-width:1240px;
   margin:0 auto;
@@ -1447,7 +1447,7 @@ a.footer-link:hover{
   gap:16px;
   flex-wrap:wrap;
   font-size:12px;
-  color:#6b6459;
+  color:#928a7d;
 }
 .landing-whatsapp{
   position:fixed;
