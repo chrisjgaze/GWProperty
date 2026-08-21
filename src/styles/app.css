@@ -1335,12 +1335,15 @@ a.footer-link:hover{
   line-height:.5;
   margin-bottom:8px;
 }
+.landing-quote-mark-close{
+  margin:-12px 0 18px;
+}
 .landing-testimonial blockquote{
   font-family:"Cormorant Garamond", serif;
   font-size:34px;
   font-weight:500;
   line-height:1.28;
-  margin:0 0 32px;
+  margin:0;
   color:var(--landing-dark);
   letter-spacing:0;
 }
