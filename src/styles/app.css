@@ -1332,11 +1332,11 @@ a.footer-link:hover{
   font-family:"Cormorant Garamond", serif;
   font-size:56px;
   color:var(--landing-accent);
-  line-height:.5;
+  line-height:1;
   margin-bottom:8px;
 }
 .landing-quote-mark-close{
-  margin:-12px 0 18px;
+  margin:10px 0 18px;
 }
 .landing-testimonial blockquote{
   font-family:"Cormorant Garamond", serif;
