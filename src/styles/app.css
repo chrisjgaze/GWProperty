@@ -1318,6 +1318,10 @@ a.footer-link:hover{
   font-weight:700;
   white-space:nowrap;
 }
+.landing-partner a{
+  display:block;
+  line-height:0;
+}
 .landing-partner img{
   width:92px;
   height:92px;
