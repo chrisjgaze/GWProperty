@@ -282,6 +282,15 @@ const developers = ["EMAAR", "DAMAC", "SOBHA", "NAKHEEL", "MERAAS", "BINGHATTI"]
               </div>
             </div>
             <LeadCaptureForm client:load />
+            {/* Static copy of the lead form so Netlify Forms detects it at deploy time.
+                Field names must match LeadCaptureForm.jsx. */}
+            <form name="investor-shortlist" data-netlify="true" netlify-honeypot="bot-field" hidden>
+              <input type="hidden" name="form-name" value="investor-shortlist" />
+              <input name="bot-field" />
+              <input name="name" />
+              <input name="contact" />
+              <select name="budget"><option value=""></option></select>
+            </form>
           </div>
         </section>
       </main>

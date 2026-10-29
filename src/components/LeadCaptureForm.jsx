@@ -2,18 +2,52 @@ import React, { useState } from "react";
 
 const WHATSAPP_LINK = "https://wa.me/971562445357";
 
+// Must match the hidden detection form in src/pages/index.astro.
+export const LEAD_FORM_NAME = "investor-shortlist";
+
+function encodeForm(data) {
+  return new URLSearchParams(data).toString();
+}
+
 export default function LeadCaptureForm() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [budget, setBudget] = useState("");
+  const [botField, setBotField] = useState("");
   const [submittedName, setSubmittedName] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   const isSubmitted = Boolean(submittedName);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const firstName = name.trim().split(" ")[0];
-    setSubmittedName(firstName || "there");
+    if (sending) return;
+    setSending(true);
+    setError("");
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeForm({
+          "form-name": LEAD_FORM_NAME,
+          "bot-field": botField,
+          name: name.trim(),
+          contact: contact.trim(),
+          budget,
+        }),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const firstName = name.trim().split(" ")[0];
+      setSubmittedName(firstName || "there");
+    } catch (err) {
+      console.error("[LEAD FORM]", err);
+      setError("Sorry, that didn't send. Please try again or message us on WhatsApp.");
+    } finally {
+      setSending(false);
+    }
   };
 
   if (isSubmitted) {
@@ -31,12 +65,23 @@ export default function LeadCaptureForm() {
 
   return (
     <div className="landing-form-card">
-      <form onSubmit={handleSubmit} className="landing-lead-form">
+      <form name={LEAD_FORM_NAME} onSubmit={handleSubmit} className="landing-lead-form">
         <h3>Request your shortlist</h3>
         <p>Takes under a minute.</p>
+        <label className="landing-form-honeypot" aria-hidden="true">
+          <span>Leave this empty</span>
+          <input
+            name="bot-field"
+            value={botField}
+            onChange={(event) => setBotField(event.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </label>
         <label>
           <span>Full name</span>
           <input
+            name="name"
             value={name}
             onChange={(event) => setName(event.target.value)}
             type="text"
@@ -47,6 +92,7 @@ export default function LeadCaptureForm() {
         <label>
           <span>Email or phone</span>
           <input
+            name="contact"
             value={contact}
             onChange={(event) => setContact(event.target.value)}
             type="text"
@@ -56,7 +102,7 @@ export default function LeadCaptureForm() {
         </label>
         <label>
           <span>Budget</span>
-          <select value={budget} onChange={(event) => setBudget(event.target.value)}>
+          <select name="budget" value={budget} onChange={(event) => setBudget(event.target.value)}>
             <option value="">Select budget range</option>
             <option value="under-1m">Under AED 1M</option>
             <option value="1-2m">AED 1M – 2M</option>
@@ -64,7 +110,14 @@ export default function LeadCaptureForm() {
             <option value="4m-plus">AED 4M+</option>
           </select>
         </label>
-        <button type="submit">Send me the shortlist</button>
+        {error && (
+          <p className="landing-form-error" role="alert">
+            {error}
+          </p>
+        )}
+        <button type="submit" disabled={sending}>
+          {sending ? "Sending…" : "Send me the shortlist"}
+        </button>
         <small>By submitting you agree to be contacted about off-plan opportunities.</small>
       </form>
     </div>

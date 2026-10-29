@@ -1419,6 +1419,9 @@ a.footer-link:hover{
   cursor:pointer;
 }
 .landing-lead-form button:hover{background:var(--landing-accent-dark);}
+.landing-lead-form button:disabled{opacity:.7;cursor:wait;}
+.landing-form-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.landing-form-error{font-size:13px;color:#a3342b;margin:0;}
 .landing-lead-form small{font-size:12px;color:#6f675b;text-align:center;margin:4px 0 0;}
 .landing-form-success{text-align:center;padding:40px 12px;animation:floatUp .5s ease both;}
 .landing-form-success div{
