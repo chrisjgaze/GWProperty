@@ -1052,12 +1052,12 @@ a.footer-link:hover{
 .landing-nav-links{gap:30px;font-size:14px;font-weight:500;letter-spacing:.2px;}
 .landing-nav-links a{color:#3a352d;}
 .landing-nav-cta{
-  background:var(--landing-dark);
-  color:#f4efe4;
+  background:var(--landing-accent);
+  color:var(--landing-dark);
   padding:12px 22px;
   border-radius:2px;
   font-size:13px;
-  font-weight:600;
+  font-weight:700;
   letter-spacing:.4px;
 }
 .landing-nav-cta:hover,.landing-primary:hover{color:var(--landing-dark);background:var(--landing-accent-dark);}
