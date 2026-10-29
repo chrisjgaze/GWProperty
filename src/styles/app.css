@@ -1057,7 +1057,7 @@ a.footer-link:hover{
   padding:12px 22px;
   border-radius:2px;
   font-size:13px;
-  font-weight:700;
+  font-weight:800;
   letter-spacing:.4px;
 }
 .landing-nav-cta:hover,.landing-primary:hover{color:var(--landing-dark);background:var(--landing-accent-dark);}
