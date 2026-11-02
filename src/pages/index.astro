@@ -5,33 +5,36 @@ import LeadCaptureForm from "../components/LeadCaptureForm.jsx";
 const featuredProjects = [
   {
     image:
-      "https://images.unsplash.com/photo-1745750434535-5943ef2fd31a?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-    status: "Handover 2027",
-    community: "Emaar Beachfront",
-    name: "Marina Vista",
-    blurb: "Sea-facing 1–3 bed residences on a private island, minutes from Dubai Marina.",
-    price: "AED 2.1M",
+      "https://images.unsplash.com/photo-1749273858638-ea678cb48e94?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    status: "Handover Q3 2030",
+    developer: "Emaar",
+    community: "Dubai Creek Harbour",
+    name: "Valia",
+    blurb: "1–4 bed apartments facing the Creek and skyline, backing onto Ras Al Khor Wildlife Sanctuary.",
+    price: "AED 2.06M",
     plan: "80/20",
   },
   {
     image:
-      "https://images.unsplash.com/photo-1749273858638-ea678cb48e94?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-    status: "Selling fast",
-    community: "Downtown Dubai",
-    name: "The Grand Boulevard",
-    blurb: "Burj Khalifa views with a 5-year post-handover payment plan.",
-    price: "AED 1.6M",
-    plan: "60/40",
+      "https://images.unsplash.com/photo-1745750434535-5943ef2fd31a?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    status: "Handover Q4 2030",
+    developer: "Ellington",
+    community: "Meydan Horizon, MBR City",
+    name: "Everly Place",
+    blurb: "A boutique collection of 209 lagoon-front residences, 15 minutes from Business Bay.",
+    price: "AED 2.05M",
+    plan: "70/30",
   },
   {
     image:
       "https://images.unsplash.com/photo-1777919541982-dcb34c146a2d?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-    status: "New launch",
-    community: "Dubai Hills Estate",
-    name: "Golf Grove Villas",
-    blurb: "Family townhouses beside an 18-hole championship course and central park.",
-    price: "AED 3.4M",
-    plan: "70/30",
+    status: "Handover Q4 2029",
+    developer: "Sobha",
+    community: "Sobha Sanctuary, Dubailand",
+    name: "The Woods",
+    blurb: "1–2 bed apartments in Sobha's nature-led masterplan, with parks, trails and a clubhouse.",
+    price: "AED 999K",
+    plan: "60/40",
   },
 ];
 
@@ -156,7 +159,7 @@ const developers = ["EMAAR", "DAMAC", "SOBHA", "NAKHEEL", "MERAAS", "BINGHATTI"]
                   <span>{project.status}</span>
                 </div>
                 <div class="landing-project-body">
-                  <div class="landing-project-community">{project.community}</div>
+                  <div class="landing-project-community">{project.developer} · {project.community}</div>
                   <h3>{project.name}</h3>
                   <p>{project.blurb}</p>
                   <div class="landing-project-meta">
